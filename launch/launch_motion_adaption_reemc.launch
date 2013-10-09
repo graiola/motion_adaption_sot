@@ -1,0 +1,30 @@
+<launch> 
+	
+	<!-- set the python path -->
+	<env name="PYTHONPATH" value="$(env PYTHONPATH):$(find motion_adaption)/python_code" />
+
+  <!-- load parameters onto the parameter server -->
+  <rosparam command="load" file="$(find motion_adaption)/config/motion_adaption_reemc.yaml" />
+  
+  <!-- launch openni tracker -->
+  <node pkg="openni_tracker" type="openni_tracker" name="openni_tracker" />
+  
+  <!-- start reemc simulation and the sot controller (NO gazebo) -->
+  <include file="$(find reemc_hardware_tests)/launch/dummy_act_mgr_test_sot.launch" />
+  
+  <!-- create the floor frame -->
+  <include file="$(find sot_controller)/launch/frame_publisher.launch"/>
+  
+  <!-- start rviz -->
+  <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find motion_adaption)/rviz_config_reemc_teleop.vcg" />
+  
+  <!-- start pose drawer -->
+  <node pkg="pose_drawer" type="pose_drawer" name="pose_drawer" />
+
+  <!-- start motion adaption node -->
+  <node pkg="motion_adaption" type="motion_adaption_node" name="motion_adaption_node"/>
+  
+  <!-- start a simple demo -->
+  <node name="run_command" pkg="dynamic_graph_bridge" type="run_command" ns="sot_controller" args="$(find motion_adaption)/python_code/launch.py" output="screen"/>
+  
+</launch>

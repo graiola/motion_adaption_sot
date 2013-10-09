@@ -1,0 +1,6 @@
+<launch>
+  
+  <!-- load parameters onto the parameter server -->
+  <rosparam command="load" file="$(find motion_adaption)/config/motion_adaption_reem.yaml" />
+  
+</launch>
