@@ -40,6 +40,6 @@ rosbuild_add_library(motion_adaption src/motion_adaption.cpp
                                      src/set_goals.cpp
                                      src/publish_msgs.cpp)
 
-rosbuild_add_executable(motion_adaption_node src/motion_adaption_node.cpp)
+rosbuild_add_executable(motion_adaption_sot src/motion_adaption_node.cpp)
 
-target_link_libraries(motion_adaption_node motion_adaption)
+target_link_libraries(motion_adaption_sot motion_adaption)

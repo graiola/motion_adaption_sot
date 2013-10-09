@@ -1,19 +1,21 @@
 <package>
-  <description brief="motion_adaption">
+  <description brief="motion_adaption_sot">
     The motion_adaption_node uses the transforms of the tracked end points of the operator, first normalises and then
     scales them according to the operator's and robot's body proportions and finally maps them onto the robot. The
-    orientation of each end point is mapped unchanged.
+    orientation of each end point is mapped unchanged. The stack of tasks is used as IK solver, in this way joint limits
+    and balancing constraints are guaranteed.
   </description>
-  <author>Marcus Liebhardt</author>
+  <author>Marcus Liebhardt, Gennaro Raiola</author>
   <license>Modified BSD</license>
   <review status="unreviewed" notes=""/>
-  <url>http://ros.org/wiki/motion_adaption</url>
+  <url></url>
   <depend package="bullet"/>
-  <!-- <depend package="eigen"/> -->
   <depend package="roscpp"/>
   <depend package="tf"/>
   <depend package="tf_conversions"/>  
   <depend package="geometry_msgs"/>
+  <depend package="sot_controller"/>
+  <depend package="pose_filter"/>
 </package>
 
 

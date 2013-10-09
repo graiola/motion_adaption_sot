@@ -26,11 +26,11 @@ solver.addContact(taskRS)
 solver.addContact(taskLS)
 solver.addContact(taskTORSO)
 
-createRosExport('matrixHomoStamped',taskRW.featureDes.position,'r_hand_goal_filt')
-createRosExport('matrixHomoStamped',taskLW.featureDes.position,'l_hand_goal_filt')
+createRosExport('matrixHomoStamped',taskRW.featureDes.position,'motion_adaption_sot/r_hand_goal_filt')
+createRosExport('matrixHomoStamped',taskLW.featureDes.position,'motion_adaption_sot/l_hand_goal_filt')
 
-createRosExport('matrixHomoStamped',taskRE.featureDes.position,'r_elbow_goal_filt')
-createRosExport('matrixHomoStamped',taskLE.featureDes.position,'l_elbow_goal_filt')
+createRosExport('matrixHomoStamped',taskRE.featureDes.position,'motion_adaption_sot/r_elbow_goal_filt')
+createRosExport('matrixHomoStamped',taskLE.featureDes.position,'motion_adaption_sot/l_elbow_goal_filt')
 
 push(taskRW)
 push(taskRE)

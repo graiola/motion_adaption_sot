@@ -1,4 +1,4 @@
-motion_adaption_node:
+motion_adaption_sot:
 
   wait_for_tf_in_sec:             0.5
   # define the reference frame for the tracked end points of the operator's body
