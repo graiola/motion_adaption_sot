@@ -27,6 +27,6 @@
   <node pkg="motion_adaption_sot" type="motion_adaption_sot" name="motion_adaption_sot"/>
   
   <!-- start a simple demo -->
-  <node name="run_command" pkg="dynamic_graph_bridge" type="run_command" ns="sot_controller" args="$(find motion_adaption_sot)/python_code/launch.py" output="screen"/>
+  <node name="run_command" pkg="dynamic_graph_bridge" type="run_command" ns="sot_controller" args="$(find motion_adaption_sot)/python_code/launch_reemc_demo.py" output="screen"/>
   
 </launch>
