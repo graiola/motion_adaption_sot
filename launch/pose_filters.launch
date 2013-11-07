@@ -1,9 +1,9 @@
 <launch>
-  <arg name="ref_frame" /> 
-	<node pkg="pose_filter" type="pose_filter" name="pose_filter_r_hand" args="r_hand_goal $(arg ref_frame)"/>
-	<node pkg="pose_filter" type="pose_filter" name="pose_filter_l_hand" args="l_hand_goal $(arg ref_frame)"/>
-	<node pkg="pose_filter" type="pose_filter" name="pose_filter_r_elbow" args="r_elbow_goal $(arg ref_frame)"/>
-	<node pkg="pose_filter" type="pose_filter" name="pose_filter_l_elbow" args="l_elbow_goal $(arg ref_frame)"/>
-	<node pkg="pose_filter" type="pose_filter" name="pose_filter_torso" args="torso_goal $(arg ref_frame)"/>
-	<node pkg="pose_filter" type="pose_filter" name="pose_filter_head" args="head_goal $(arg ref_frame)"/>
+  <arg name="ref_frame" />
+	<node pkg="pose_filter" type="pose_filter" name="pose_filter_r_elbow" args="r_elbow_goal $(arg ref_frame) /sot_controller/arm_right_4_joint"/>
+	<node pkg="pose_filter" type="pose_filter" name="pose_filter_l_elbow" args="l_elbow_goal $(arg ref_frame) /sot_controller/arm_left_4_joint"/>
+	<node pkg="pose_filter" type="pose_filter" name="pose_filter_torso" args="torso_goal $(arg ref_frame) /sot_controller/torso_2_joint"/>
+	<node pkg="pose_filter" type="pose_filter" name="pose_filter_head" args="head_goal $(arg ref_frame) /sot_controller/head_2_joint"/>
+	<node pkg="pose_filter" type="pose_filter" name="pose_filter_r_hand" args="r_hand_goal $(arg ref_frame) /sot_controller/arm_right_7_joint"/>
+	<node pkg="pose_filter" type="pose_filter" name="pose_filter_l_hand" args="l_hand_goal $(arg ref_frame) /sot_controller/arm_left_7_joint"/>
 </launch>

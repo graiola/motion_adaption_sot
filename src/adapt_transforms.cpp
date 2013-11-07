@@ -74,18 +74,39 @@ bool MotionAdaption::adaptTransforms()
   return true;
 }
 
-
 bool MotionAdaption::adaptTorso()
 {
-  // enter code here for setting a torso frame not centered at the robot's reference frame
+    // enter code here for setting a torso frame not centered at the robot's reference frame
+    try
+    {
+      tf_listener_.waitForTransform("/fixed_ref_frame", robot_torso_str_, ros::Time(0), ros::Duration(wait_for_tf_));
+      tf_listener_.lookupTransform("/fixed_ref_frame", robot_torso_str_, ros::Time(0), tf_robot_torso_torso_);
+    }
+    catch (tf::TransformException const &ex)
+    {
+      ROS_DEBUG("%s",ex.what());
+      ROS_WARN("(Step 3.0) Couldn't get the transformation from the fixed_ref_frame to torso_goal_frame.");
+      ROS_WARN("No further processing will be done!");
+      return false;
+    }
 
   tf_torso_goal_.setIdentity();
- // tf_broadcaster_.sendTransform(tf::StampedTransform(tf_torso_goal_, ros::Time::now(), ref_frame, "/torso_adapted"));
+
+  quat_adjust_.setValue(0.5,0.5,-0.5,0.5); // allign to have the twist and flex motions: roty(pi/2)*rotx(pi/2)
+
+  quat_ = tf_usr_torso_.getRotation();
+  quat_ = quat_adjust_ * quat_;
+
+  // reverse the rotation along y (to mirror the user twist)
+  tf::Matrix3x3(quat_).getRPY(z_adapt_,y_adapt_,x_adapt_);
+  quat_.setRPY(z_adapt_,-y_adapt_,x_adapt_);
+  tf_torso_goal_.setRotation(quat_);
+
+  // tf_broadcaster_.sendTransform(tf::StampedTransform(tf_torso_goal_, ros::Time::now(), ref_frame, "/torso_adapted"));
   internal_tf.setTransform(tf::StampedTransform(tf_torso_goal_, calc_time, ref_frame, "/torso_adapted"));
   
   return true;
 }
-
 
 bool MotionAdaption::adaptHead()
 {

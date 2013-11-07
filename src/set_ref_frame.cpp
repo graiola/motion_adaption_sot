@@ -66,7 +66,7 @@ bool MotionAdaption::setRefFrame()
   quat_.setRPY(ref_frame_rot_vec_[0], ref_frame_rot_vec_[1], ref_frame_rot_vec_[2]);
   tf_ref_frame_.setRotation(quat_);
   tf_broadcaster_.sendTransform(tf::StampedTransform(tf_ref_frame_, ros::Time::now(),
-  robot_base_str_, "/fixed_ref_frame")); 
+  robot_base_str_, "/fixed_ref_frame"));
 
   return true;
 }

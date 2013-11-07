@@ -17,22 +17,25 @@ motion_adaption_sot:
   robot:
     base_frame_name:              /base_link
     torso_ref_frame_name:         /torso_1_link
+    torso_frame_name:             /torso_2_link
     head_frame_name:              /head_2_link    
     right_shoulder_frame_name:    /arm_right_2_link
     right_elbow_frame_name:       /arm_right_4_link
     right_hand_frame_name:        /arm_right_7_link   
     left_shoulder_frame_name:     /arm_left_2_link
+  # define the hydra's frames:
+  hydra:
+    hydra_base:                   /hydra_base
+    hydra_right:                  /hydra_right
+    hydra_left:                   /hydra_left    
     
   # define roations of orientations by roll pitch yaw
   rotation_angles:
   # align the orientation of the user torso with robot torso
   # i.e.: user bends foward -> ref frame rotates forward
-    ref_frame_rot: {p: 0.0, r: 1.5707963267948966, y: -1.5707963267948966}  
-  # align adapted frames with goal frames
-  goals:
-    torso_goal_rot: {p: 1.5707963267948966, r: 3.1415926535897931, y: 0.0}
-    head_goal_rot: {p: 1.5707963267948966, r: 3.1415926535897931, y: 0.0}
-    right_elbow_goal_rot: {p: 0.0, r: 3.1415926535897931, y: 3.1415926535897931}
-    right_hand_goal_rot: {p: 1.5707963267948966, r: 0.0, y: 0.0}
-    left_elbow_goal_rot: {p: 3.1415926535897931, r: 0.0, y: 0.0}
-    left_hand_goal_rot: {p: -1.5707963267948966, r: 0.0, y: 0.0}
+    ref_frame_rot: {p: 0.0, r: 1.5707963267948966, y: -1.5707963267948966}
+    # align adapted frames with goal frames
+    goals:
+      torso_goal_rot: {p: -1.5707963267948966, r: 0.0, y: 0.0}
+      right_hand_goal_rot: {p: 1.5707963267948966, r: 0.0, y: 0.0}
+      left_hand_goal_rot: {p: -1.5707963267948966, r: 0.0, y: 0.0}

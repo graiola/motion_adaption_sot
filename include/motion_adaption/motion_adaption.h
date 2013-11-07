@@ -75,6 +75,13 @@ class MotionAdaption
     bool getTransforms();
 
     /**
+     * Retrieves transforms from the Razer Hydra.
+     *
+     * @returns true, if all transforms of the Hydra have been retrieved successfully
+     */
+    bool getHydraTransforms();
+
+    /**
      * Sets the reference frame on the robot needed for the adaption of the operator's transforms.
      *
      * @returns true, if the specified frame for the reference frame on the robot has been retrieved successfully
@@ -162,6 +169,9 @@ class MotionAdaption
     // time to wait for tf transforms in seconds
     double wait_for_tf_;
 
+    // is the hydra active? true = yes
+    bool activate_hydra_;
+
     // publishers and message for sending the pose commands for each endpoint
     ros::Publisher pub_torso_pose_;
     ros::Publisher pub_head_pose_;
@@ -195,6 +205,11 @@ class MotionAdaption
     std::string robot_l_elbow_str_;
     std::string robot_l_hand_str_;
 
+    // strings for configuring the hydra frames
+    std::string hydra_base_;
+    std::string hydra_right_;
+    std::string hydra_left_;
+
     // vectors for defining rotations of orientations
     tf::Vector3 ref_frame_rot_vec_;
     tf::Vector3 torso_goal_rot_vec_;
@@ -226,6 +241,8 @@ class MotionAdaption
     tf::StampedTransform tf_robot_r_shoulder_l_shoulder_;
     tf::StampedTransform tf_robot_r_shoulder_r_elbow_;
     tf::StampedTransform tf_robot_r_elbow_r_hand_;
+    tf::StampedTransform tf_hydra_right_;
+    tf::StampedTransform tf_hydra_left_;
 
     tf::StampedTransform tf_ref_frame_;
     tf::StampedTransform tf_torso_aligned_;

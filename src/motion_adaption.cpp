@@ -58,6 +58,10 @@ MotionAdaption::MotionAdaption(): nh_private_("~")
 {
   nh_private_.param("wait_for_tf_in_sec", wait_for_tf_, WAIT_FOR_TF_IN_S);
   nh_private_.param("world_ref_frame_name", world_ref_frame_str_, NO_NAME_STRING);
+  nh_private_.param("hydra/activate_hydra", activate_hydra_, false);
+  nh_private_.param<std::string>("hydra/hydra_base", hydra_base_, "/hydra_base");
+  nh_private_.param<std::string>("hydra/hydra_right", hydra_right_, "/hydra_right");
+  nh_private_.param<std::string>("hydra/hydra_left", hydra_left_, "/hydra_left");
   nh_private_.param("user/torso_frame_name", user_torso_str_, NO_NAME_STRING);
   nh_private_.param("user/head_frame_name", user_head_str_, NO_NAME_STRING);
   nh_private_.param("user/right_shoulder_frame_name", user_r_shoulder_str_, NO_NAME_STRING);
@@ -77,6 +81,7 @@ MotionAdaption::MotionAdaption(): nh_private_("~")
   //nh_private_.param("robot/torso_frame_name", robot_torso_str_, NO_NAME_STRING);  
   nh_private_.param("robot/torso_ref_frame_name", robot_ref_torso_str_, NO_NAME_STRING);
   nh_private_.param("robot/head_frame_name", robot_head_str_, NO_NAME_STRING);
+  nh_private_.param("robot/torso_frame_name", robot_torso_str_, NO_NAME_STRING);
   nh_private_.param("robot/right_shoulder_frame_name", robot_r_shoulder_str_, NO_NAME_STRING);      
   nh_private_.param("robot/right_elbow_frame_name", robot_r_elbow_str_, NO_NAME_STRING); 
   nh_private_.param("robot/right_hand_frame_name", robot_r_hand_str_, NO_NAME_STRING); 
@@ -185,17 +190,17 @@ MotionAdaption::~MotionAdaption()
 
 void MotionAdaption::adapt()
 {  
-  calc_time = ros::Time::now();
-  if(getTransforms())
-  {
-    if(setRefFrame())
+    calc_time = ros::Time::now();
+    if(getTransforms())
     {
-      if(adaptTransforms())
-      {
-        setGoals();
-        publishData();
-      }
+        if(setRefFrame())
+        {
+            if(adaptTransforms())
+            {
+                setGoals();
+                publishData();
+            }
+        }
     }
-  }
 }
 
