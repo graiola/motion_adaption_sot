@@ -1,0 +1,44 @@
+<launch> 
+	
+	<!-- set the python path -->
+	<env name="PYTHONPATH" value="$(env PYTHONPATH):$(find motion_adaption_sot)/python_code" />
+
+  <arg name="activate_hydra" default="false" />
+	<group if="$(arg activate_hydra)">
+		<!-- start hydra -->
+		<include file="$(find razer_hydra)/hydra.launch">
+		<arg name="tf" value="true"/>
+		</include>
+		<!-- create a transform between hydra's frame and robot's frame -->
+		<node pkg="tf" type="static_transform_publisher" name="hydra_robot" args="0 0 0 0 0 0 base_link hydra_base 100" />
+		<!-- set activate_hydra parameter for motion adaption -->
+		<param name="motion_adaption_sot/hydra/activate_hydra" type="bool" value="true"/>
+	</group>
+
+  <!-- load parameters onto the parameter server -->
+  <rosparam command="load" file="$(find motion_adaption_sot)/config/motion_adaption_reem.yaml" />
+  
+  <!-- launch openni tracker -->
+  <node pkg="openni_tracker" type="openni_tracker" name="openni_tracker" />
+  
+  <!-- create the floor frame -->
+  <include file="$(find sot_controller)/launch/floor_frame_publisher.launch"/>
+  
+  <!-- start reem simulation and the sot controller (No Gazebo) -->
+  <include file="$(find reem_hardware_tests)/launch/dummy_act_mgr_test_sot.launch" />
+
+  <!-- start rviz -->
+  <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find motion_adaption_sot)/rviz_config_reem_teleop.vcg" />
+
+  <!-- start the pose filters -->
+	<include file="$(find motion_adaption_sot)/launch/pose_filters.launch" ns="motion_adaption_sot">
+		<arg name="ref_frame" value="floor_link"/>
+	</include>
+
+  <!-- start motion adaption node -->
+  <node pkg="motion_adaption_sot" type="motion_adaption_sot" name="motion_adaption_sot"/>
+  
+  <!-- start a simple demo -->
+  <node name="run_command" pkg="dynamic_graph_bridge" type="run_command" ns="sot_controller" args="$(find motion_adaption_sot)/python_code/reem_teleop.py" output="screen"/>
+  
+</launch>
